@@ -349,14 +349,15 @@ LepRadLU::LepRadLU(KinematicsRad const& kin) {
 				(kin.Q_sq + 4.*sq(kin.m))
 					*(4.*sq(kin.M)*kin.V_m - kin.z*sq(kin.S_x))
 				+ kin.S_p*(kin.S*kin.V_2 - kin.X*kin.V_1))));
-	Real theta_053_hat = (2.*kin.S)/(kin.lambda_1*kin.lambda_S_sqrt)*kin.F_21*(
+	//The old value in 2019 paper
+        Real theta_053_hat = (2.*kin.S)/(kin.lambda_1*kin.lambda_S_sqrt)*kin.F_21*(
 		kin.vol_phi_k_R*(
 			2.*(kin.mu*kin.Q_sq + kin.tau*kin.V_1)
 				*(kin.S*kin.X - sq(kin.M)*kin.Q_sq)
 			+ (kin.Q_sq + kin.tau*kin.S)
 				*(kin.z*kin.Q_sq*kin.S_x - kin.S*kin.V_2 - kin.X*kin.V_1))
 		- kin.vol_phi_h*sq(kin.Q_sq + kin.tau*kin.S));
-	theta_053 = theta_053_hat + kin.S/(kin.lambda_1*kin.lambda_S_sqrt)*(
+	Real theta_053_2019 = theta_053_hat + kin.S/(kin.lambda_1*kin.lambda_S_sqrt)*(
 		kin.vol_phi_h*(
 			8.*kin.F_21*sq(kin.m)*(
 				kin.tau*(kin.tau*sq(kin.M) - kin.S_x)
@@ -382,7 +383,24 @@ LepRadLU::LepRadLU(KinematicsRad const& kin) {
 					kin.z*kin.S_x*kin.Q_sq
 					- kin.S*kin.V_2
 					+ kin.X*kin.V_1))));
-	theta_151 = 0.;
+        //The updated quantity in 2023 paper arXiv:2310.17691v1 lambda_q is lambda_Y
+	theta_053 = kin.S/(kin.lambda_1*sq(kin.lambda_S_sqrt))*(
+		kin.vol_phi_h*(
+			kin.tau*kin.F_d*(
+				(2*kin.tau*sq(kin.M))*(kin.Q_sq+4*sq(kin.m))
+                                +2*kin.tau*(sq(kin.M)*kin.Q_sq-kin.S*kin.X)
+                                   )
+                        -kin.S_p*kin.Q_sq*kin.F_1p+2*kin.lambda_Y
+                        )
+		+ kin.vol_phi_k_R*kin.F_1p*(
+                        kin.tau*kin.F_d*(kin.S_p*(kin.X*kin.V_1-kin.S*kin.V_2)
+                            +(kin.z*sq(kin.S_x)-4*sq(kin.M)*kin.V_m)*(kin.Q_sq+4*sq(kin.m))
+                          )
+                        +(kin.S_p*kin.S_x*(kin.z*kin.Q_sq+kin.V_m)-kin.lambda_Y*kin.V_p)
+                        )
+                );
+        //std::cout<<"theta_053 2019 "<<theta_053_2019<<" 2023 "<<theta_053<<std::endl;
+        theta_151 = 0.;
 	theta_152 = (2.*sq(kin.m))/(kin.lambda_1*kin.lambda_S_sqrt)*(
 		kin.vol_phi_h*(
 			2.*kin.F_21*(
