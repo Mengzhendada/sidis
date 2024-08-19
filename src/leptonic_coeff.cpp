@@ -2,6 +2,7 @@
 
 #include "sidis/kinematics.hpp"
 #include "sidis/extra/math.hpp"
+//#include <iostream>
 
 using namespace sidis;
 using namespace sidis::lep;
@@ -384,7 +385,7 @@ LepRadLU::LepRadLU(KinematicsRad const& kin) {
 					- kin.S*kin.V_2
 					+ kin.X*kin.V_1))));
         //The updated quantity in 2023 paper arXiv:2310.17691v1 lambda_q is lambda_Y
-	theta_053 = kin.S/(kin.lambda_1*sq(kin.lambda_S_sqrt))*(
+	theta_053 = kin.S/(kin.lambda_1*kin.lambda_S_sqrt)*(
 		kin.vol_phi_h*(
 			kin.tau*kin.F_d*(
 				(2*kin.tau*sq(kin.M))*(kin.Q_sq+4*sq(kin.m))

@@ -19,6 +19,8 @@
 #include "sidis/vector.hpp"
 #include "sidis/version.hpp"
 
+#include "sidis/Exc_structure_function.hpp"
+
 namespace sidis {
 
 /**
