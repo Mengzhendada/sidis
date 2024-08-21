@@ -8,14 +8,11 @@
 #include "sidis/constant.hpp"
 #include "sidis/cut.hpp"
 #include "sidis/frame.hpp"
-#include "sidis/hadronic_coeff.hpp"
+#include "sidis/Exc_structure_function.hpp"
 #include "sidis/kinematics.hpp"
 #include "sidis/leptonic_coeff.hpp"
 #include "sidis/phenom.hpp"
 #include "sidis/structure_function.hpp"
-#include "sidis/vector.hpp"
-#include "sidis/extra/integrate.hpp"
-#include "sidis/extra/math.hpp"
 
 using namespace sidis;
 using namespace sidis::cut;

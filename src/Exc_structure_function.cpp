@@ -194,7 +194,8 @@ EXC_SF_combine::EXC_SF_combine(EXC_SF_F exc_sf_f){
   f56i=exc_sf_f.f5r*exc_sf_f.f6r-exc_sf_f.f5i*exc_sf_f.f6i;
   f66=sq(exc_sf_f.f6r)+sq(exc_sf_f.f6i);
 }
-EXC_SF_UU::EXC_SF_UU(EXC_SF_combine exc_SF_com,Kinematics kin){
+
+EXC_SF::EXC_SF(EXC_SF_combine exc_SF_com,Kinematics kin){
   r1=sq(sqrt(kin.W_sq)+kin.M)+kin.Q_sq;
   r2=sq(sqrt(kin.W_sq)-kin.M)+kin.Q_sq;
   r3=sq(sqrt(kin.W_sq)+m_n)-sq(kin.mh);
@@ -217,17 +218,7 @@ EXC_SF_UU::EXC_SF_UU(EXC_SF_combine exc_SF_com,Kinematics kin){
     );
   H01i_000=(sqrt(kin.Q_sq) * kin.ph_t / (sqrt(kin.W_sq) * kin.lambda_Y_sqrt)) * (
     (sqrt(kin.W_sq) - kin.M) * (r5 * exc_SF_com.f45i - r1 * (2 * sqrt(kin.W_sq) * exc_SF_com.f16i) + r4 * exc_SF_com.f46i) +
-    (sqrt(kin.W_sq) + kin.M) * (r5 * exc_SF_com.f36i - r2 * (2 * sqrt(kin.W_sq) * exc_SF_com.f25i + r3 * exc_SF_com.f35i))
-    );
-
-}
-
-EXC_SF_UT::EXC_SF_UT(EXC_SF_combine exc_SF_com,Kinematics kin){
-  r1=sq(sqrt(kin.W_sq)+kin.M)+kin.Q_sq;
-  r2=sq(sqrt(kin.W_sq)-kin.M)+kin.Q_sq;
-  r3=sq(sqrt(kin.W_sq)+m_n)-sq(kin.mh);
-  r4=sq(sqrt(kin.W_sq)-m_n)-sq(kin.mh);
-  r5=kin.W_sq*(sq(kin.M)+sq(kin.mh)+sq(m_n)-kin.Q_sq-2*kin.t)+(sq(kin.M)+kin.Q_sq)*(sq(kin.mh)-sq(m_n))-sq(kin.W_sq);
+    (sqrt(kin.W_sq) + kin.M) * (r5 * exc_SF_com.f36i - r2 * (2 * sqrt(kin.W_sq) * exc_SF_com.f25i + r3 * exc_SF_com.f35i)));
   H00pH22_010 = (2  * kin.ph_t / (sqrt(kin.W_sq) * kin.lambda_Y_sqrt)) * ((kin.W_sq - sq(kin.M)) * kin.lambda_Y_sqrt * exc_SF_com.f12i + 4 * kin.Q_sq * kin.W_sq * exc_SF_com.f56i);
   H11mH22opt2_010= (1. / (kin.W_sq * sq(kin.ph_t) * kin.lambda_Y_sqrt)) * (r5 * (sq(sqrt(kin.W_sq) - kin.M) * r1 * exc_SF_com.f14i - sq(sqrt(kin.W_sq) + kin.M) * r2 * exc_SF_com.f23i) + (kin.W_sq - sq(kin.M)) * kin.lambda_Y_sqrt * (r4 * exc_SF_com.f24i + 2 * sqrt(kin.W_sq) * (sq(kin.ph_t) * exc_SF_com.f34i - 2 * exc_SF_com.f12i)) - r3 * exc_SF_com.f13i);
   H22_010=(2 * kin.ph_t * kin.lambda_Y_sqrt / sqrt(kin.W_sq)) *(kin.W_sq - sq(kin.M)) * exc_SF_com.f12i;  
@@ -237,16 +228,7 @@ EXC_SF_UT::EXC_SF_UT(EXC_SF_combine exc_SF_com,Kinematics kin){
     );
   H01i_010=(sqrt(kin.Q_sq) / (r1 * r2 * sqrt(kin.W_sq))) * (
     (sqrt(kin.W_sq) - kin.M) * (r1 * r5 * exc_SF_com.f16r - kin.lambda_Y * (r3 * exc_SF_com.f15r + 2 * sqrt(kin.W_sq) * sq(kin.ph_t) * exc_SF_com.f45r)) +
-    (sqrt(kin.W_sq) + kin.M) * (kin.lambda_Y * (r4 * exc_SF_com.f26r + 2 * sqrt(kin.W_sq) * sq(kin.ph_t) * exc_SF_com.f36r) - r2 * r5 * exc_SF_com.f25r)
-    );
-
-}
-EXC_SF_UT1::EXC_SF_UT1(EXC_SF_combine exc_SF_com,Kinematics kin){
-  r1=sq(sqrt(kin.W_sq)+kin.M)+kin.Q_sq;
-  r2=sq(sqrt(kin.W_sq)-kin.M)+kin.Q_sq;
-  r3=sq(sqrt(kin.W_sq)+m_n)-sq(kin.mh);
-  r4=sq(sqrt(kin.W_sq)-m_n)-sq(kin.mh);
-  r5=kin.W_sq*(sq(kin.M)+sq(kin.mh)+sq(m_n)-kin.Q_sq-2*kin.t)+(sq(kin.M)+kin.Q_sq)*(sq(kin.mh)-sq(m_n))-sq(kin.W_sq);
+    (sqrt(kin.W_sq) + kin.M) * (kin.lambda_Y * (r4 * exc_SF_com.f26r + 2 * sqrt(kin.W_sq) * sq(kin.ph_t) * exc_SF_com.f36r) - r2 * r5 * exc_SF_com.f25r));
   H02r_100=(sqrt(kin.Q_sq) / (r1 * r2 * sqrt(kin.W_sq))) * (
     (sqrt(kin.W_sq) - kin.M) * (r3 * kin.lambda_Y * exc_SF_com.f15i - r1 * r5 * exc_SF_com.f16i) +   (sqrt(kin.W_sq) + kin.M) * (r2 * (r5 * exc_SF_com.f25i - r1 * r4 * exc_SF_com.f26i))
     );
@@ -259,13 +241,6 @@ EXC_SF_UT1::EXC_SF_UT1(EXC_SF_combine exc_SF_com,Kinematics kin){
   H12i_100= (kin.ph_t  / (2 * kin.W_sq * kin.lambda_Y_sqrt)) * (
     (kin.W_sq - sq(kin.M)) * (r3 * kin.lambda_Y * exc_SF_com.f13r - r1 * r2 * r4 * exc_SF_com.f24r) +
     r5 * (sq(sqrt(kin.W_sq) + kin.M) * r2 * exc_SF_com.f23r - sq(sqrt(kin.W_sq) - kin.M) * r1 * exc_SF_com.f14r));
-}
-EXC_SF_UL::EXC_SF_UL(EXC_SF_combine exc_SF_com,Kinematics kin){
-  r1=sq(sqrt(kin.W_sq)+kin.M)+kin.Q_sq;
-  r2=sq(sqrt(kin.W_sq)-kin.M)+kin.Q_sq;
-  r3=sq(sqrt(kin.W_sq)+m_n)-sq(kin.mh);
-  r4=sq(sqrt(kin.W_sq)-m_n)-sq(kin.mh);
-  r5=kin.W_sq*(sq(kin.M)+sq(kin.mh)+sq(m_n)-kin.Q_sq-2*kin.t)+(sq(kin.M)+kin.Q_sq)*(sq(kin.mh)-sq(m_n))-sq(kin.W_sq);
   H02r_001=(-2* sqrt(kin.Q_sq) * kin.ph_t / (kin.lambda_Y_sqrt)) * (
     (sqrt(kin.W_sq) + kin.M) * r2 * exc_SF_com.f25i + (sqrt(kin.W_sq) - kin.M) * r1 * exc_SF_com.f16i);
   H02i_001=(-2 * sqrt(kin.Q_sq) * kin.ph_t / (kin.lambda_Y_sqrt)) * (
@@ -276,37 +251,45 @@ EXC_SF_UL::EXC_SF_UL(EXC_SF_combine exc_SF_com,Kinematics kin){
   H12i_001= (-1.0 / (2 * kin.W_sq * r1 * r2)) * (
     sq(sqrt(kin.W_sq) - kin.M) * r1 * (2 *sqrt(kin.W_sq)* kin.lambda_Y * sq(kin.ph_t) * exc_SF_com.f14r + r1 * r2 * r3 * exc_SF_com.f11) +
     sq(sqrt(kin.W_sq) + kin.M) * r2 * (2 *sqrt(kin.W_sq)* kin.lambda_Y * sq(kin.ph_t) * exc_SF_com.f23r + r1 * r2 * r4 * exc_SF_com.f22) +
-    2 * (sq(kin.W_sq) - sq(kin.M)) * r5 * kin.lambda_Y * exc_SF_com.f12r
-    );
+    2 * (sq(kin.W_sq) - sq(kin.M)) * r5 * kin.lambda_Y * exc_SF_com.f12r);
+
 }
+
 //Generalized exclusive structure functions of exclusive process equation 42
-Generalized_EXC_SF_UU::Generalized_EXC_SF_UU(EXC_SF_UU exc_sf_uu, Kinematics kin){
+EXCUU::EXCUU(EXC_SF exc_sf, Kinematics kin){
   rex=2*(kin.Q_sq*(sq(kin.M)-sq(m_n)+kin.S_x+kin.t)+kin.S_x*kin.V_m)/kin.lambda_Y_sqrt;
-  H1_000=exc_sf_uu.H22_000;
-  H2_000=1/kin.lambda_Y_sqrt*(4*kin.Q_sq*(exc_sf_uu.H00pH22_000)-4*sqrt(kin.Q_sq)/kin.ph_t*exc_sf_uu.H01r_000+sq(rex)*(exc_sf_uu.H11mH22opt2_000));
-  H3_000=exc_sf_uu.H11mH22opt2_000;
-  H4_000=1/kin.lambda_Y_sqrt*(-rex*(exc_sf_uu.H11mH22opt2_000)+2*sqrt(kin.Q_sq)/kin.ph_t*exc_sf_uu.H01r_000);
-  H5_000=2*sqrt(kin.Q_sq)/(kin.ph_t*kin.lambda_Y_sqrt)*exc_sf_uu.H01i_000;
+  H1_000=exc_sf.H22_000;
+  H2_000=1/kin.lambda_Y_sqrt*(4*kin.Q_sq*(exc_sf.H00pH22_000)-4*sqrt(kin.Q_sq)/kin.ph_t*exc_sf.H01r_000+sq(rex)*(exc_sf.H11mH22opt2_000));
+  H3_000=exc_sf.H11mH22opt2_000;
+  H4_000=1/kin.lambda_Y_sqrt*(-rex*(exc_sf.H11mH22opt2_000)+2*sqrt(kin.Q_sq)/kin.ph_t*exc_sf.H01r_000);
 }
-Generalized_EXC_SF_UT::Generalized_EXC_SF_UT(EXC_SF_UT exc_sf_ut, Kinematics kin){
+EXCLU::EXCLU(EXC_SF exc_sf, Kinematics kin){
   rex=2*(kin.Q_sq*(sq(kin.M)-sq(m_n)+kin.S_x+kin.t)+kin.S_x*kin.V_m)/kin.lambda_Y_sqrt;
-  H1_010=exc_sf_ut.H22_010;
-  H2_010=1/kin.lambda_Y_sqrt*(4*kin.Q_sq*(exc_sf_ut.H00pH22_010)-4*sqrt(kin.Q_sq)/kin.ph_t*exc_sf_ut.H01r_010+sq(rex)*(exc_sf_ut.H11mH22opt2_010));
-  H3_010=exc_sf_ut.H11mH22opt2_010;
-  H4_010=1/kin.lambda_Y_sqrt*(-rex*(exc_sf_ut.H11mH22opt2_010)+2*sqrt(kin.Q_sq)/kin.ph_t*exc_sf_ut.H01r_010);
-  H5_010=2*sqrt(kin.Q_sq)/(kin.ph_t*kin.lambda_Y_sqrt)*exc_sf_ut.H01i_010;
+  H5_000=2*sqrt(kin.Q_sq)/(kin.ph_t*kin.lambda_Y_sqrt)*exc_sf.H01i_000;
 }
-Generalized_EXC_SF_UT1::Generalized_EXC_SF_UT1(EXC_SF_UT1 exc_sf_ut1, Kinematics kin){
+EXCUT::EXCUT(EXC_SF exc_sf, Kinematics kin){
   rex=2*(kin.Q_sq*(sq(kin.M)-sq(m_n)+kin.S_x+kin.t)+kin.S_x*kin.V_m)/kin.lambda_Y_sqrt;
-  H6_100=2/kin.ph_t/kin.lambda_Y*(2*sqrt(kin.Q_sq)*exc_sf_ut1.H02r_100-rex/kin.ph_t*exc_sf_ut1.H12r_100);
-  H7_100=2/kin.ph_t/kin.lambda_Y*(2*sqrt(kin.Q_sq)*exc_sf_ut1.H02i_100-rex/kin.ph_t*exc_sf_ut1.H12i_100);
-  H8_100=2/sq(kin.ph_t)/kin.lambda_Y_sqrt*exc_sf_ut1.H12r_100;
-  H9_100=2/sq(kin.ph_t)/kin.lambda_Y_sqrt*exc_sf_ut1.H12i_100;
+  H1_010=exc_sf.H22_010;
+  H2_010=1/kin.lambda_Y_sqrt*(4*kin.Q_sq*(exc_sf.H00pH22_010)-4*sqrt(kin.Q_sq)/kin.ph_t*exc_sf.H01r_010+sq(rex)*(exc_sf.H11mH22opt2_010));
+  H3_010=exc_sf.H11mH22opt2_010;
+  H4_010=1/kin.lambda_Y_sqrt*(-rex*(exc_sf.H11mH22opt2_010)+2*sqrt(kin.Q_sq)/kin.ph_t*exc_sf.H01r_010);
+  H6_100=2/kin.ph_t/kin.lambda_Y*(2*sqrt(kin.Q_sq)*exc_sf.H02r_100-rex/kin.ph_t*exc_sf.H12r_100);
+  H8_100=2/sq(kin.ph_t)/kin.lambda_Y_sqrt*exc_sf.H12r_100;
 }
-Generalized_EXC_SF_UL::Generalized_EXC_SF_UL(EXC_SF_UL exc_sf_ul, Kinematics kin){
+EXCLT::EXCLT(EXC_SF exc_sf,Kinematics kin){
   rex=2*(kin.Q_sq*(sq(kin.M)-sq(m_n)+kin.S_x+kin.t)+kin.S_x*kin.V_m)/kin.lambda_Y_sqrt;
-  H6_001=2/kin.ph_t/kin.lambda_Y*(2*sqrt(kin.Q_sq)*exc_sf_ul.H02r_001-rex/kin.ph_t*exc_sf_ul.H12r_001);
-  H7_001=2/kin.ph_t/kin.lambda_Y*(2*sqrt(kin.Q_sq)*exc_sf_ul.H02i_001-rex/kin.ph_t*exc_sf_ul.H12i_001);
-  H8_001=2/sq(kin.ph_t)/kin.lambda_Y_sqrt*exc_sf_ul.H12r_001;
-  H9_001=2/sq(kin.ph_t)/kin.lambda_Y_sqrt*exc_sf_ul.H12i_001;
+  H5_010=2*sqrt(kin.Q_sq)/(kin.ph_t*kin.lambda_Y_sqrt)*exc_sf.H01i_010;
+  H7_100=2/kin.ph_t/kin.lambda_Y*(2*sqrt(kin.Q_sq)*exc_sf.H02i_100-rex/kin.ph_t*exc_sf.H12i_100);
+  H9_100=2/sq(kin.ph_t)/kin.lambda_Y_sqrt*exc_sf.H12i_100;
+}
+EXCUL::EXCUL(EXC_SF exc_sf, Kinematics kin){
+  rex=2*(kin.Q_sq*(sq(kin.M)-sq(m_n)+kin.S_x+kin.t)+kin.S_x*kin.V_m)/kin.lambda_Y_sqrt;
+  H6_001=2/kin.ph_t/kin.lambda_Y*(2*sqrt(kin.Q_sq)*exc_sf.H02r_001-rex/kin.ph_t*exc_sf.H12r_001);
+  H8_001=2/sq(kin.ph_t)/kin.lambda_Y_sqrt*exc_sf.H12r_001;
+}
+EXCLL::EXCLL(EXC_SF exc_sf, Kinematics kin){
+  rex=2*(kin.Q_sq*(sq(kin.M)-sq(m_n)+kin.S_x+kin.t)+kin.S_x*kin.V_m)/kin.lambda_Y_sqrt;
+  H7_001=2/kin.ph_t/kin.lambda_Y*(2*sqrt(kin.Q_sq)*exc_sf.H02i_001-rex/kin.ph_t*exc_sf.H12i_001);
+  H9_001=2/sq(kin.ph_t)/kin.lambda_Y_sqrt*exc_sf.H12i_001;
+
 }
