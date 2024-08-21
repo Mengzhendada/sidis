@@ -2,7 +2,7 @@
 #include <sidis/sidis.hpp>
 #include <sidis/sf_set/prokudin.hpp>
 
-sidis::Real const PI = sidis::PI;
+sidis::Real const myPI = sidis::PI;
 sidis::Real const M_TH = sidis::MASS_P + sidis::MASS_PI_0;
 
 int main() {
@@ -18,7 +18,7 @@ int main() {
 		0.9,      // Bjorken y.
 		0.3,      // Bjorken z.
 		2.,       // Transverse momentum of hadron, squared.
-		0.5 * PI, // Azimuthal angle of hadron.
+		0.5 * myPI, // Azimuthal angle of hadron.
 		0.,       // Azimuthal angle of transverse target polarization.
 	};
 	sidis::kin::Kinematics kin(particles, S, phase_space);
