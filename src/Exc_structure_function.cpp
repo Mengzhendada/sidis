@@ -194,6 +194,7 @@ EXC_SF_combine::EXC_SF_combine(EXC_SF_F exc_sf_f){
   f56i=exc_sf_f.f5r*exc_sf_f.f6r-exc_sf_f.f5i*exc_sf_f.f6i;
   f66=sq(exc_sf_f.f6r)+sq(exc_sf_f.f6i);
 }
+
 EXC_SF::EXC_SF(EXC_SF_combine exc_SF_com,Kinematics kin){
   r1=sq(sqrt(kin.W_sq)+kin.M)+kin.Q_sq;
   r2=sq(sqrt(kin.W_sq)-kin.M)+kin.Q_sq;
@@ -290,4 +291,5 @@ EXCLL::EXCLL(EXC_SF exc_sf, Kinematics kin){
   rex=2*(kin.Q_sq*(sq(kin.M)-sq(m_n)+kin.S_x+kin.t)+kin.S_x*kin.V_m)/kin.lambda_Y_sqrt;
   H7_001=2/kin.ph_t/kin.lambda_Y*(2*sqrt(kin.Q_sq)*exc_sf.H02i_001-rex/kin.ph_t*exc_sf.H12i_001);
   H9_001=2/sq(kin.ph_t)/kin.lambda_Y_sqrt*exc_sf.H12i_001;
+
 }

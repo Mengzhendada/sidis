@@ -5,7 +5,7 @@ endif()
 
 project(
 	Sidis
-	VERSION 0.4.3.0
+	VERSION 0.6.0.0
 	DESCRIPTION "Event generator for polarized SIDIS with radiative corrections"
 	HOMEPAGE_URL "https://github.com/duanebyer/sidis"
 	LANGUAGES CXX)
@@ -33,12 +33,12 @@ endif()
 # Project-specific cache variable for tests.
 if(DEFINED Sidis_BUILD_TESTS)
 	set(
-		Sidis_BUILD_TESTS ${BUILD_TESTING}
+		Sidis_BUILD_TESTS ${Sidis_BUILD_TESTS}
 		CACHE BOOL
 		"should the tests be built (overrides BUILD_TESTING)")
 	set(BUILD_TESTING ${Sidis_BUILD_TESTS})
 else()
-	set(Sidis_BUILD_TEST ${BUILD_TESTING})
+	set(Sidis_BUILD_TESTS ${BUILD_TESTING})
 endif()
 
 set(
@@ -75,7 +75,7 @@ set_property(
 	"float" "double" "long double")
 
 # Interprocedural optimization support.
-set(IPO_SUPPORTED YES)
+set(IPO_SUPPORTED NO)
 if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.9)
 	include(CheckIPOSupported)
 	check_ipo_supported(RESULT IPO_SUPPORTED OUTPUT IPO_OUTPUT)
@@ -87,7 +87,7 @@ if(Sidis_BUILD_SHARED_LIBS)
 	set(IPO_SUPPORTED NO)
 endif()
 set(
-	Sidis_IPO_ENABLED ${IPO_SUPPORTED}
+	Sidis_ENABLE_IPO ${IPO_SUPPORTED}
 	CACHE BOOL
 	"should interprocedural optimization support be enabled")
 
@@ -101,13 +101,11 @@ set(
 	CACHE BOOL
 	"should OpenMP multithreading support be enabled")
 
-configure_file(
-	"${Sidis_SOURCE_DIR}/cog/const.py.in"
-	"${Sidis_BINARY_DIR}/cog/const.py")
-configure_file(
-	"${Sidis_SOURCE_DIR}/cog/gen_struct.py"
-	"${Sidis_BINARY_DIR}/cog/gen_struct.py"
-	COPYONLY)
+# Set up warnings.
+set(
+	Sidis_COMPILER_WARNINGS
+	$<$<OR:$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:GNU>>:-Wall -Wextra -pedantic>
+	$<$<CXX_COMPILER_ID:MSVC>:/W4>)
 
 # Add external libraries.
 add_subdirectory(external/bubble EXCLUDE_FROM_ALL)

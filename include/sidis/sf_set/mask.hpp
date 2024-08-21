@@ -11,61 +11,61 @@ namespace sidis {
 namespace sf {
 namespace set {
 
-static std::size_t const NUM_SF = 18;
+std::size_t const NUM_SF = 18;
 
 /// Mask that selects only leading structure functions.
-static bool const MASK_LEADING[NUM_SF] {
+bool const MASK_LEADING[NUM_SF] {
 	0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0,
 };
 /// Mask that selects only subleading structure functions.
-static bool const MASK_SUBLEADING[NUM_SF] {
+bool const MASK_SUBLEADING[NUM_SF] {
 	1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1,
 };
 /// Masks for different structure function polarizations.
 /// \{
-static bool const MASK_UU[NUM_SF] {
+bool const MASK_UU[NUM_SF] {
 	1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 };
-static bool const MASK_UL[NUM_SF] {
+bool const MASK_UL[NUM_SF] {
 	0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 };
-static bool const MASK_UT[NUM_SF] {
+bool const MASK_UT[NUM_SF] {
 	0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
 };
-static bool const MASK_UP[NUM_SF] {
+bool const MASK_UP[NUM_SF] {
 	0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
 };
-static bool const MASK_UX[NUM_SF] {
+bool const MASK_UX[NUM_SF] {
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
 };
-static bool const MASK_LU[NUM_SF] {
+bool const MASK_LU[NUM_SF] {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0,
 };
-static bool const MASK_LL[NUM_SF] {
+bool const MASK_LL[NUM_SF] {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0,
 };
-static bool const MASK_LT[NUM_SF] {
+bool const MASK_LT[NUM_SF] {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1,
 };
-static bool const MASK_LP[NUM_SF] {
+bool const MASK_LP[NUM_SF] {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1,
 };
-static bool const MASK_LX[NUM_SF] {
+bool const MASK_LX[NUM_SF] {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1,
 };
-static bool const MASK_XU[NUM_SF] {
+bool const MASK_XU[NUM_SF] {
 	1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0,
 };
-static bool const MASK_XL[NUM_SF] {
+bool const MASK_XL[NUM_SF] {
 	0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0,
 };
-static bool const MASK_XT[NUM_SF] {
+bool const MASK_XT[NUM_SF] {
 	0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1,
 };
-static bool const MASK_XP[NUM_SF] {
+bool const MASK_XP[NUM_SF] {
 	0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1,
 };
-static bool const MASK_XX[NUM_SF] {
+bool const MASK_XX[NUM_SF] {
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
 };
 /// \}
@@ -106,7 +106,7 @@ public:
 	/// Constructs an SfSet for \p target with a \p mask determining which
 	/// structure functions will be non-zero. See the class documentation for a
 	/// table describing which structure functions correspond to which indices.
-	MaskSfSet(const bool (&mask)[NUM_SF], std::unique_ptr<SfSet>&& sf) :
+	MaskSfSet(const bool (&mask)[NUM_SF], std::unique_ptr<SfSet>&& sf) noexcept :
 			SfSet(sf->target),
 			_mask(),
 			_sf(std::move(sf)) {
@@ -125,7 +125,7 @@ public:
 		}
 	}
 	MaskSfSet(MaskSfSet const& other) = delete;
-	MaskSfSet(MaskSfSet&& other) : MaskSfSet(other._mask, std::move(other._sf)) { }
+	MaskSfSet(MaskSfSet&& other) noexcept : MaskSfSet(other._mask, std::move(other._sf)) { }
 	MaskSfSet& operator=(MaskSfSet const& other) = delete;
 	MaskSfSet& operator=(MaskSfSet&& other) = delete;
 	virtual ~MaskSfSet() = default;
@@ -202,7 +202,7 @@ public:
 			return 0.;
 		}
 	}
-	Real F_UT_sin_phis(part::Hadron h, Real x, Real z, Real Q_sq, Real ph_t_sq) const {
+	Real F_UT_sin_phis(part::Hadron h, Real x, Real z, Real Q_sq, Real ph_t_sq) const override {
 		if (_mask[10]) {
 			return _sf->F_UT_sin_phis(h, x, z, Q_sq, ph_t_sq);
 		} else {

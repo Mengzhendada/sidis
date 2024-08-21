@@ -86,7 +86,9 @@ struct EXC_SF_combine{
 
 };
 
+
 struct EXC_SF{
+
   //C.23 exclusive structure functions in orthogonal basis
   //p is plus, m is minus, o is over, 'ex' in C.23 is ignored in variable name, r1 r2 are same as in exc_sf_fs
   //_000 means no target polarization _123 corresponds to eta1, eta2, eta3
@@ -128,7 +130,7 @@ struct EXCLU{
   double rex;
   double H5_000;
   explicit EXCLU(EXC_SF exc_sf,Kinematics kin);
-};a
+};
 struct EXCUT{
   //equations in 42, the generalized exclusive structure functions of exclusive processes that contribute to the cross section of exclusive radiative tail
   double rex;

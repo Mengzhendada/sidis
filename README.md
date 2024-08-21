@@ -5,6 +5,9 @@ scattering (SIDIS) with QED radiative corrections, following closely work done
 in [1]. The project is divided into a library component `sidis` for calculating
 SIDIS cross-sections, and a binary component `sidisgen` for generating events.
 
+A detailed description of the generator can be found on
+[the arxiv](https://arxiv.org/abs/2210.03785).
+
 ## Quick start
 
 ### Generator
@@ -14,6 +17,8 @@ by `sidisgen --help`. As an example:
 
 ```csv
 mc.num_events        10000
+file.gen             gen.root
+file.event           event.root
 phys.sf_set          prokudin
 phys.rc_method       approx
 phys.soft_threshold  0.01
@@ -113,7 +118,7 @@ The following CMake configuration options may be of use:
 * `Sidis_BUILD_EXAMPLES`: Whether to build the examples.
 * `Sidis_BUILD_DOXYGEN`: Whether to build the Doxygen documentation.
 * `Sidis_BUILD_APPS`: Whether to build the `sidisgen` binary.
-* `Sidis_IPO_ENABLED`: Whether to build with interprocedural optimization.
+* `Sidis_ENABLE_IPO`: Whether to build with interprocedural optimization.
 
 ## Acknowledgements
 
@@ -129,7 +134,6 @@ This software makes use of the following libraries:
   integration.
 * [GSL](https://www.gnu.org/software/gsl/): Multi-dimensional Monte-Carlo
   integration.
-* [cog](https://nedbatchelder.com/code/cog/): Code generation with Python.
 
 ## References
 
