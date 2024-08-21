@@ -11,30 +11,28 @@
 #include <sidis/transform.hpp>
 #include <sidis/vector.hpp>
 
-#include "abs_matcher.hpp"
-#include "rel_matcher.hpp"
-#include "stream_generator.hpp"
-
-using namespace sidis;
-
+// Declare stream operators before including templates, since ADL fails us here.
 namespace {
-
-std::istream& operator>>(std::istream& in, math::Vec3& vec) {
+std::istream& operator>>(std::istream& in, sidis::math::Vec3& vec) {
 	in >> vec.x;
 	in >> vec.y;
 	in >> vec.z;
 	return in;
 }
-
-std::istream& operator>>(std::istream& in, math::Vec4& vec) {
+std::istream& operator>>(std::istream& in, sidis::math::Vec4& vec) {
 	in >> vec.t;
 	in >> vec.x;
 	in >> vec.y;
 	in >> vec.z;
 	return in;
 }
-
 }
+
+#include "abs_matcher.hpp"
+#include "rel_matcher.hpp"
+#include "stream_generator.hpp"
+
+using namespace sidis;
 
 TEST_CASE(
 		"3-vector basic operations checks",
@@ -86,13 +84,13 @@ TEST_CASE(
 		vec.par(vec).z,
 		RelMatcher<Real>(vec.z, prec));
 	CHECK_THAT(
-		vec.par(10. * math::Vec3::X).norm(),
+		vec.par(10. * math::VEC3_X).norm(),
 		RelMatcher<Real>(std::abs(vec.x), prec));
 	CHECK_THAT(
-		vec.par(10. * math::Vec3::Y).norm(),
+		vec.par(10. * math::VEC3_Y).norm(),
 		RelMatcher<Real>(std::abs(vec.y), prec));
 	CHECK_THAT(
-		vec.par(10. * math::Vec3::Z).norm(),
+		vec.par(10. * math::VEC3_Z).norm(),
 		RelMatcher<Real>(std::abs(vec.z), prec));
 }
 
@@ -111,7 +109,7 @@ TEST_CASE(
 		-PI / 3.);
 
 	// Apply simple `x` rotation to some vectors.
-	test = rotate_x * math::Vec3::X;
+	test = rotate_x * math::VEC3_X;
 	CHECK_THAT(test.x, RelMatcher<Real>(1., prec));
 	CHECK_THAT(test.y, RelMatcher<Real>(0., prec));
 	CHECK_THAT(test.z, RelMatcher<Real>(0., prec));
@@ -165,7 +163,7 @@ TEST_CASE(
 		math::Transform3 rotate_2 = math::Transform3::rotate_to(vec_from, vec);
 
 		// Apply to the `from` vector.
-		math::Vec3 result_1 = rotate_1 * math::Vec3::Z;
+		math::Vec3 result_1 = rotate_1 * math::VEC3_Z;
 		math::Vec3 result_2 = rotate_2 * vec_from.unit();
 		CHECK_THAT(result_1.x, AbsMatcher<Real>(vec.unit().x, prec * vec.norm()));
 		CHECK_THAT(result_1.y, AbsMatcher<Real>(vec.unit().y, prec * vec.norm()));
@@ -275,7 +273,7 @@ TEST_CASE(
 		std::log(1.5));
 
 	// Apply simple `x` boost to some vectors.
-	test = boost_x * math::Vec4::T;
+	test = boost_x * math::VEC4_T;
 	CHECK_THAT(test.t, RelMatcher<Real>(1.25, prec));
 	CHECK_THAT(test.x, RelMatcher<Real>(0.75, prec));
 	CHECK_THAT(test.y, RelMatcher<Real>(0., prec));
@@ -342,7 +340,7 @@ TEST_CASE(
 	math::Transform4 boost_2 = math::Transform4::transform_to(vec_from, vec);
 
 	// Apply to the `from` vector.
-	math::Vec4 result_1 = boost_1 * math::Vec4::T;
+	math::Vec4 result_1 = boost_1 * math::VEC4_T;
 	math::Vec4 result_2 = boost_2 * vec_from.unit();
 	CHECK_THAT(result_1.t, AbsMatcher<Real>(vec.unit().t, prec * vec.t));
 	CHECK_THAT(result_1.x, AbsMatcher<Real>(vec.unit().x, prec * vec.t));

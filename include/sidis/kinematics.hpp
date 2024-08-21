@@ -229,7 +229,7 @@ struct Kinematics {
 	/// \}
 
 	/// Initialize an empty Kinematics in an invalid state.
-	Kinematics() { }
+	Kinematics() = default;
 	/// Fill in a Kinematics corresponding to particles \p ps, with beam energy
 	/// given by \p S (with \f$S = 2 p k_1\f$), and at a PhaseSpace point
 	/// \p ph_space.
@@ -543,7 +543,7 @@ struct KinematicsRad {
 	Kinematics project_shift() const;
 
 	/// Initialize an empty KinematicsRad in an invalid state.
-	KinematicsRad() { }
+	KinematicsRad() = default;
 	/// Fill in a KinematicsRad corresponding to particles \p ps, with beam
 	/// energy given by \p S (with \f$S = 2 p k_1\f$), and at a PhaseSpaceRad
 	/// point \p ph_space.
@@ -599,7 +599,7 @@ struct Initial {
 		target(ps.target),
 		beam(ps.beam),
 		p(math::Vec4(ps.M, 0., 0., 0.)),
-		k1(math::Vec4::from_length_and_t(ps.m, beam_energy, math::Vec3::Z)) { }
+		k1(math::Vec4::from_length_and_t(ps.m, beam_energy, math::VEC3_Z)) { }
 
 	/// Prepare the initial state with information from kinematics object
 	/// \p kin, with the target at rest, and with the beam pointed along
@@ -608,7 +608,7 @@ struct Initial {
 		target(kin.target),
 		beam(kin.beam),
 		p(math::Vec4(kin.M, 0., 0., 0.)),
-		k1(math::Vec4::from_length_and_t(kin.m, kin.S / (2. * kin.M), math::Vec3::Z)) { }
+		k1(math::Vec4::from_length_and_t(kin.m, kin.S / (2. * kin.M), math::VEC3_Z)) { }
 };
 
 /**

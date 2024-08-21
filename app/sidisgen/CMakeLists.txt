@@ -1,11 +1,12 @@
 find_package(ROOT 6.16 REQUIRED COMPONENTS Core Physics Tree CONFIG)
 add_executable(sidisgen
 	main.cpp
-	generator.hpp generator.cpp
-	event_type.hpp
 	exception.hpp
+	generator.hpp generator.ipp generator.cpp
 	params.hpp params.cpp
-	utility.hpp utility.cpp)
+	params_format.hpp params_format.cpp
+	terminal.hpp terminal.cpp
+	utility.hpp)
 target_link_libraries(sidisgen PRIVATE
 	sidis
 	Bubble::bubble
@@ -29,12 +30,11 @@ target_compile_features(sidisgen PRIVATE cxx_std_11)
 set_target_properties(
 	sidisgen PROPERTIES
 	CXX_EXTENSIONS OFF
-	INTERPROCEDURAL_OPTIMIZATION ${Sidis_IPO_ENABLED})
+	INTERPROCEDURAL_OPTIMIZATION ${Sidis_ENABLE_IPO})
 target_compile_options(
 	sidisgen
 	PRIVATE
-	$<$<OR:$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:GNU>>:-Wall -Wextra -pedantic>
-	$<$<CXX_COMPILER_ID:MSVC>:/W4>)
+	${Sidis_COMPILER_WARNINGS})
 
 include(GNUInstallDirs)
 set_target_properties(
